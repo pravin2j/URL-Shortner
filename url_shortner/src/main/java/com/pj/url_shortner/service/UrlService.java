@@ -1,5 +1,6 @@
 package com.pj.url_shortner.service;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,10 +17,10 @@ import com.pj.url_shortner.repo.UrlRepo;
 @Service
 public class UrlService {
 	@Autowired
-	UrlRepo urlRepo;
+	private UrlRepo urlRepo;
 	
-	private static final String CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+	private static final String CHARACTERS = "abcdefghijklmnopqstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	
 	public List<Url> getAllUrl() {
 		return urlRepo.findAll();
 	}
@@ -44,7 +45,7 @@ public class UrlService {
 			newUrl.setInputUrl(inputUrl);
 			newUrl.setOutputUrl(encodedUrl);
 			newUrl.setGeneratedDateTime(generateDateTime);
-			newUrl.setExpirationDateTime(generateDateTime.plusMinutes(1));
+			newUrl.setExpirationDateTime(generateDateTime.plusSeconds(30));
 			urlRepo.save(newUrl);;
 		}
 		return encodedUrl;
@@ -83,15 +84,19 @@ public class UrlService {
     }
     
     @Scheduled(cron = "0 * * * * ?")
-    public void handleExpiredUrl() {
-    	LocalDateTime now = LocalDateTime.now();
-    	List<Url> expiredUrls = urlRepo.findByExpirationDateTimeBefore(now);
-    	System.out.println(expiredUrls);
-    	
-    	if(!expiredUrls.isEmpty()) {
-    		urlRepo.deleteAll(expiredUrls);
-    	}
+    public void handleExpiredUrl() throws IOException {
+        System.out.println("Scheduler triggered.");
+        LocalDateTime now = LocalDateTime.now();
+        List<Url> expiredUrls = urlRepo.findByExpirationDateTimeBefore(now);
+        System.out.println("Expired URLs: " + expiredUrls);
+
+        if (!expiredUrls.isEmpty()) {
+            urlRepo.deleteAll(expiredUrls);
+        } else {
+            System.out.println("No expired URLs found.");
+        }
     }
+
 }
 
 
