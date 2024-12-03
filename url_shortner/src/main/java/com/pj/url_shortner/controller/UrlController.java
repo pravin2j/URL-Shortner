@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import com.pj.url_shortner.dto.Url;
 import com.pj.url_shortner.service.UrlService;
+import com.pj.url_shortner.util.ResponseStructure;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -27,17 +29,20 @@ public class UrlController {
 	
 	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/getAllUrl") 
-	public List<Url> getAllUrls(){
+	public ResponseEntity<ResponseStructure<List<Url>>> getAllUrls(){
 		return urlService.getAllUrl();
 	}
 	
 	@CrossOrigin(origins = "http://localhost:5173")
 	@PostMapping("/createUrl")
-	public String createUrl(@RequestBody Map<String, String> requestBody) {
-		String inputUrl = requestBody.get("inUrl");
-		return urlService.createUrl(inputUrl);
+	public ResponseEntity<ResponseStructure<Url>> createUrl(@RequestBody Url url) {
+		return urlService.createUrl(url);
 	}
 	
+	@PostMapping("/custom")
+	public ResponseEntity<ResponseStructure<Url>> createCustomUrl(@RequestBody Url url) {
+		return urlService.customUrl(url);
+	}
 	
 	@GetMapping("/{urlSlug}")
 	public void redirectUrl(@PathVariable String urlSlug, HttpServletResponse response) throws IOException{
