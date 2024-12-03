@@ -5,3 +5,12 @@ const apiClient = axios.create({
 });
 
 export default apiClient;
+
+//get service 
+export const getAllUrls = () => {
+    return apiClient.get('/getAllUrl')
+};
+
+export const postUrl = (inUrl) => {
+    return apiClient.post('/createUrl', inUrl)
+}

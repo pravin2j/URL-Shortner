@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import ContextApi from './ContextApi'
 
-const UrlTable = (props) => {
+const UrlTable = () => {
     let {urls} = useContext(ContextApi)
   return (
     <div className="w-[80%] self-center flex justify-center">
@@ -11,7 +11,7 @@ const UrlTable = (props) => {
               <th className='p-2 w-[70%]' scope='col'>Long URL</th>
               <th className='p-2 w-[30%]' scope='col'>Short URL</th>
             </tr>
-          </thead>
+          </thead> 
           <tbody>
             {urls.map((url) => (
               <tr className='odd:bg-gray-200 even:bg-white' key={url.urlId}>
