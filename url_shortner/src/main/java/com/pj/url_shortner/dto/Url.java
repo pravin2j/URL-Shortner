@@ -17,7 +17,7 @@ public class Url {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long urlId;
 	@Lob
-	@Column(unique = true, columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String inputUrl;
 	@Column(unique = true)
 	private String outputUrl;
