@@ -20,26 +20,24 @@ import com.pj.url_shortner.service.UrlService;
 import com.pj.url_shortner.util.ResponseStructure;
 
 import jakarta.servlet.http.HttpServletResponse;
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class UrlController {
 
 	@Autowired
 	private UrlService urlService;
 	
-	@CrossOrigin(origins = "http://localhost:5173")
 	@GetMapping("/getAllUrl") 
 	public ResponseEntity<ResponseStructure<List<Url>>> getAllUrls(){
 		return urlService.getAllUrl();
 	}
 	
-	@CrossOrigin(origins = "http://localhost:5173")
 	@PostMapping("/createUrl")
 	public ResponseEntity<ResponseStructure<Url>> createUrl(@RequestBody Url url) {
 		return urlService.createUrl(url);
 	}
 	
-	@PostMapping("/custom")
+	@PostMapping("/customUrl")
 	public ResponseEntity<ResponseStructure<Url>> createCustomUrl(@RequestBody Url url) {
 		return urlService.customUrl(url);
 	}
