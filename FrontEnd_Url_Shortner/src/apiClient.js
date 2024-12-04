@@ -11,6 +11,10 @@ export const getAllUrls = () => {
     return apiClient.get('/getAllUrl')
 };
 
-export const postUrl = (inUrl) => {
+export const createUrl = (inUrl) => {
     return apiClient.post('/createUrl', inUrl)
+}
+
+export const createCustomUrl = (inUrl) => {
+    return apiClient.post('/customUrl', inUrl)
 }

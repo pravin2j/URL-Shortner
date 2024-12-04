@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from "react"
 
 const ContextApi = createContext();
-export default ContextApi;
+export default ContextApi

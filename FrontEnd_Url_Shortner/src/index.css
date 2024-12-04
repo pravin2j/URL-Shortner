@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html{
+        --bluish : rgb(199 210 254);
+        --grayish : rgb(229 231 235);
+        --background-main : #fff;
+    }
+    html[data-theme="darktheme"] {
+        --bluish: rgb(23, 37, 84);
+        --grayish: rgb(31, 41, 55);
+        --font-color: #fff;
+        --background-main: #111;
+    }
+    body {
+        @apply bg-backgroundMain;
+    }
+}
